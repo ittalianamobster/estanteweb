@@ -200,4 +200,17 @@ public class LivroController {
         repository.atualizar(livro);
         return "redirect:/livros/" + id;
     }
+
+    @GetMapping("/livros/{id}/remover")
+    public String confirmarRemocao(@PathVariable Long id, Model model) {
+        model.addAttribute("livro", buscarOu404(id));
+        return "livro-remover";
+    }
+
+    @PostMapping("/livros/{id}/remover")
+    public String remover(@PathVariable Long id) {
+        buscarOu404(id);
+        repository.remover(id);
+        return "redirect:/livros/html";
+    }
 }

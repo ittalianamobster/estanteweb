@@ -57,6 +57,11 @@ public class LivroRepository {
                 livro.getAno(), livro.getPreco(), livro.getId());
     }
 
+    public int remover(Long id) {
+        String sql = "DELETE FROM livro WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
     public Livro buscarPorId(Long id) {
         String sql = "SELECT * FROM livro WHERE id = ?";
         List<Map<String, Object>> linhas = jdbcTemplate.queryForList(sql, id);

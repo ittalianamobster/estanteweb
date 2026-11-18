@@ -12,8 +12,9 @@
     <p>Preço: R$ ${livro.preco?c}</p>
 
     <p>
-        <a href="/livros/${livro.id?c}/editar">Corrigir este livro</a>
-    </p>
+    <a href="/livros/${livro.id?c}/editar">Corrigir este livro</a> |
+    <a href="/livros/${livro.id?c}/remover">Remover este livro</a>
+</p>
     <#if outros?size gt 0>
         <h2>Outros títulos do mesmo autor</h2>
         <ul>
