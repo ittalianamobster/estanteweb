@@ -83,12 +83,7 @@ public class LivroController {
             @RequestParam double preco,
             Model model) {
 
-        String erro = null;
-        if (titulo.isBlank() || autor.isBlank()) {
-            erro = "Título e autor não podem ficar em branco.";
-        } else if (preco <= 0) {
-            erro = "O preço deve ser maior que zero.";
-        }
+        String erro = validar(titulo, autor, preco);
 
         if (erro != null) {
             model.addAttribute("erro", erro);
@@ -147,5 +142,15 @@ public class LivroController {
     @GetMapping("/livros/quem-acessa")
     public String quemAcessa(@RequestHeader("User-Agent") String userAgent) {
         return "Você acessou usando: " + userAgent;
+    }
+
+    private String validar(String titulo, String autor, double preco) {
+        if (titulo.isBlank() || autor.isBlank()) {
+            return "Título e autor não podem ficar em branco.";
+        }
+        if (preco <= 0) {
+            return "O preço deve ser maior que zero.";
+        }
+        return null;
     }
 }
