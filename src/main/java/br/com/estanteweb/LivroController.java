@@ -65,11 +65,7 @@ public class LivroController {
 
     @GetMapping("/livros/{id}")
     public String detalhar(@PathVariable Long id, Model model) {
-        Livro livro = repository.buscarPorId(id);
-
-        if (livro == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        Livro livro = buscarOu404(id);
 
         model.addAttribute("livro", livro);
         model.addAttribute("outros", repository.listarDoMesmoAutor(livro.getAutor(), id));
@@ -152,5 +148,13 @@ public class LivroController {
             return "O preço deve ser maior que zero.";
         }
         return null;
+    }
+
+    private Livro buscarOu404(Long id) {
+        Livro livro = repository.buscarPorId(id);
+        if (livro == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return livro;
     }
 }
