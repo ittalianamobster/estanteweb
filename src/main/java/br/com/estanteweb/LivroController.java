@@ -157,4 +157,15 @@ public class LivroController {
         }
         return livro;
     }
+
+    @GetMapping("/livros/{id}/editar")
+    public String formularioEditar(@PathVariable Long id, Model model) {
+        Livro livro = buscarOu404(id);
+        model.addAttribute("id", livro.getId());
+        model.addAttribute("titulo", livro.getTitulo());
+        model.addAttribute("autor", livro.getAutor());
+        model.addAttribute("ano", livro.getAno());
+        model.addAttribute("preco", livro.getPreco());
+        return "livro-editar";
+    }
 }
