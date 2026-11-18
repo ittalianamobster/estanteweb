@@ -168,4 +168,36 @@ public class LivroController {
         model.addAttribute("preco", livro.getPreco());
         return "livro-editar";
     }
+
+    @PostMapping("/livros/{id}/editar")
+    public String editar(@PathVariable Long id,
+            @RequestParam String titulo,
+            @RequestParam String autor,
+            @RequestParam int ano,
+            @RequestParam double preco,
+            Model model) {
+
+        buscarOu404(id);
+
+        String erro = validar(titulo, autor, preco);
+        if (erro != null) {
+            model.addAttribute("erro", erro);
+            model.addAttribute("id", id);
+            model.addAttribute("titulo", titulo);
+            model.addAttribute("autor", autor);
+            model.addAttribute("ano", ano);
+            model.addAttribute("preco", preco);
+            return "livro-editar";
+        }
+
+        Livro livro = new Livro();
+        livro.setId(id);
+        livro.setTitulo(titulo);
+        livro.setAutor(autor);
+        livro.setAno(ano);
+        livro.setPreco(preco);
+
+        repository.atualizar(livro);
+        return "redirect:/livros/" + id;
+    }
 }
